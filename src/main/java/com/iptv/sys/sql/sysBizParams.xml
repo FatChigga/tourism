@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sysBizParams">
+    <select id="getBizParamsList" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+        <!-- SELECT * FROM sys_biz_params ORDER BY KeyCode, OrderNum -->
+        SELECT p.Id,p.KeyName,p.KeyCode,p.KeyValue,p.Text,p.IsEnable,p.IsVisible,p.OrderNum,p.Remark
+        FROM sys_biz_params p WHERE BINARY p.KeyCode = #{KeyCode}
+        LIMIT #{skip},#{pageSize}
+    </select>
+
+    <select id="getBizParamsTotal" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        SELECT count(1) AS total FROM sys_biz_params p WHERE BINARY p.KeyCode = #{KeyCode}
+    </select>
+    <select id="getBizParamsPageNum" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        SELECT CEIL(COUNT(1)/${pageSize}) AS Num FROM sys_biz_params p WHERE BINARY p.KeyCode = #{KeyCode}
+    </select>
+
+    <select id="findParam" resultType="java.util.HashMap">
+        <!-- SELECT * FROM sys_biz_params WHERE KeyCode = #{KeyCode} AND KeyValue = #{KeyValue} -->
+        SELECT * FROM sys_biz_params WHERE Id = #{Id}
+    </select>
+
+    <select id="findExistParam" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+        SELECT * FROM sys_biz_params WHERE KeyCode = #{KeyCode} AND KeyValue = #{KeyValue}
+    </select>
+
+    <insert id="save" parameterType="java.util.HashMap">
+        INSERT INTO sys_biz_params (KeyCode,KeyValue,Text,IsEnable,IsVisible,OrderNum,Remark,KeyName)
+        VALUES (#{KeyCode},#{KeyValue},#{Text},#{IsEnable},#{IsVisible},#{OrderNum},#{Remark},#{KeyName})
+    </insert>
+
+    <update id="update" parameterType="java.util.HashMap">
+        UPDATE sys_biz_params SET KeyCode = #{KeyCode}, KeyValue = #{KeyValue}, Text = #{Text}, IsEnable = #{IsEnable},
+        IsVisible = #{IsVisible}, OrderNum = #{OrderNum}, Remark=#{Remark}
+        WHERE Id = #{Id}
+        <!-- WHERE KeyCode = #{BeforeKey} AND KeyValue = #{BeforeValue} -->
+    </update>
+
+    <delete id="delete" parameterType="java.util.HashMap">
+        <!-- DELETE FROM sys_biz_params WHERE KeyCode = #{KeyCode} AND KeyValue = #{KeyValue} -->
+        DELETE FROM sys_biz_params
+        WHERE Id IN
+        <foreach collection="Id" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="getBizDic" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT a.Text as text,a.KeyValue as value,a.*
+        FROM sys_biz_params a
+        WHERE a.KeyCode = #{Key} AND a.isVisible = 1
+        ORDER BY OrderNum
+    </select>
+
+    <select id="getRootNodes" resultType="java.util.HashMap">
+        SELECT DISTINCT BINARY p.KeyCode,p.KeyCode, p.KeyName AS name,p.KeyName FROM sys_biz_params p
+    </select>
+
+    <select id="getExistCount" resultType="java.lang.Integer">
+        SELECT count(*) as Count FROM sys_biz_params a
+        WHERE BINARY a.KeyCode = #{KeyCode}
+    </select>
+
+    <select id="getExistName" resultType="java.lang.Integer">
+        SELECT count(*) as Count FROM sys_biz_params a
+        WHERE BINARY a.KeyName = #{KeyName}
+    </select>
+
+    <update id="updateBizParams" parameterType="java.util.HashMap">
+        UPDATE sys_biz_params p SET p.KeyName = #{KeyName},p.KeyCode = #{KeyCode}
+        WHERE BINARY p.KeyCode=#{oldKeyCode}
+    </update>
+
+    <delete id="deleteBizParams" parameterType="java.util.HashMap">
+        DELETE FROM sys_biz_params WHERE BINARY KeyCode = #{KeyCode} AND BINARY KeyName = #{KeyName}
+    </delete>
+
+    <select id="getParam" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+        SELECT p.Id,p.KeyName,p.KeyCode,p.KeyValue,p.Text,p.IsEnable,p.IsVisible,p.OrderNum,p.Remark
+        FROM sys_biz_params p WHERE BINARY p.KeyCode = #{KeyCode}
+    </select>
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="role">
+    <select id="getRolePaged" resultType="java.util.HashMap">
+        SELECT * FROM sys_role ORDER BY OrderNum ASC
+    </select>
+
+    <select id="findRoleByCode" resultType="java.util.HashMap">
+        SELECT * FROM sys_role WHERE Code = #{Code}
+    </select>
+
+    <select id="findRoleById" resultType="java.util.HashMap">
+        SELECT * FROM sys_role WHERE id=#{id}
+    </select>
+
+    <insert id="save" parameterType="java.util.HashMap">
+        INSERT INTO sys_role (Code,Name,Level,Enable,IsSystem,OrderNum)
+        VALUES ( #{Code},#{Name},#{Level},#{Enable},#{IsSystem},#{OrderNum})
+    </insert>
+
+    <update id="update" parameterType="java.util.HashMap">
+        UPDATE sys_role SET Code=#{Code},Name=#{Name},Level = #{Level},
+        Enable=#{Enable},IsSystem=#{IsSystem},OrderNum=#{OrderNum}
+        WHERE id = #{Id}
+    </update>
+
+    <delete id="delete" parameterType="java.util.HashMap">
+        DELETE FROM sys_role WHERE ID IN
+        <foreach collection="Id" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="roleList" resultType="java.util.HashMap">
+        SELECT id,Name FROM sys_role
+    </select>
+
+    <select id="getRoleByName" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+        SELECT Id,Code,Name,Level,Enable,IsSystem,OrderNum FROM sys_role WHERE Name = #{Name}
+    </select>
+
+    <insert id="saveRoleFromCopy" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="Id">
+        INSERT INTO sys_role (Code,Name,Level,Enable,IsSystem,OrderNum)
+        VALUES ( #{Code},#{Name},#{Level},#{Enable},#{IsSystem},#{OrderNum})
+    </insert>
+</mapper>

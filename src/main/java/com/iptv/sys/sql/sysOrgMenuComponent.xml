@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sysOrgMenuComponent">
+    <delete id="deleteMenuList" parameterType="java.util.HashMap">
+        DELETE FROM sys_orgmenu_component WHERE OrganizationId = #{organizationId}
+    </delete>
+
+    <insert id="saveMenu" parameterType="java.util.HashMap">
+        INSERT INTO sys_orgmenu_component (OrganizationId,MenuId,ComponentPermisionId) VALUES
+        (#{organizationId},#{menuId},#{permisionId})
+    </insert>
+
+    <delete id="deleteOrgMenuComponentList" parameterType="java.util.HashMap">
+        DELETE FROM sys_orgmenu_component WHERE OrganizationId IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item.id}
+        </foreach>
+    </delete>
+</mapper>

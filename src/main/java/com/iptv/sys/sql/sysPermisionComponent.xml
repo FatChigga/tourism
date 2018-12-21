@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="permisionComponent">
+
+    <!-- 查询全部组件权限数据 -->
+    <select id="getPermisionComponentPaged" resultType="java.util.HashMap">
+        SELECT pc.Id,pc.Code,pc.Name,pc.IsEnable
+        FROM sys_permision_component pc
+    </select>
+
+    <!-- 根据Code查询组件权限中的数据  -->
+    <select id="getPermisionComponentByCode" resultType="java.util.HashMap">
+        SELECT pc.Id,pc.Code,pc.Name,pc.CssContent,pc.IsEnable
+        FROM sys_permision_component pc WHERE binary pc.Code = #{Code}
+    </select>
+
+    <!-- 新增组件权限数据 -->
+    <insert id="savePermisionComponent" parameterType="java.util.HashMap">
+        INSERT INTO sys_permision_component (Code,Name,CssContent,IsEnable)
+        VALUES ( #{Code},#{Name},#{CssContent},#{IsEnable})
+    </insert>
+
+    <!-- 查询单条组件权限数据  -->
+    <select id="getPermisionComponentById" resultType="java.util.HashMap">
+        SELECT pc.Id,pc.Code,pc.Name,pc.CssContent,pc.IsEnable
+        FROM sys_permision_component pc WHERE pc.id=#{Id}
+    </select>
+
+    <!-- 修改组件权限数据 -->
+    <update id="updatePermisionComponent" parameterType="java.util.HashMap">
+        UPDATE sys_permision_component
+        SET Code=#{Code},Name=#{Name},CssContent = #{CssContent},IsEnable=#{IsEnable}
+        WHERE id = #{Id}
+    </update>
+
+    <!-- 删除组件权限数据 -->
+    <delete id="deletePermisionComponent" parameterType="java.util.HashMap">
+        DELETE FROM sys_permision_component WHERE ID IN
+        <foreach collection="Id" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="getAllPermision" resultType="java.util.HashMap">
+        SELECT * FROM sys_permision_component
+    </select>
+
+</mapper>

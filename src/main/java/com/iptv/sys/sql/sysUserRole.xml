@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sysUserRole">
+    <select id="getUserNodes" resultType="java.util.HashMap">
+        SELECT concat('[',a.Code,'] ',a.UserName) AS name,
+        a.Id as id,true as open
+        FROM sys_user a ORDER BY Code ,CreateTime DESC
+    </select>
+
+    <select id="getRoleNodes" resultType="java.util.HashMap">
+        SELECT concat('[',a.Code,'] ',a.Name) AS name,
+        a.Id as id,true as open
+        FROM sys_role a WHERE Enable = 1 ORDER BY OrderNum
+    </select>
+
+    <select id="getRoleList" resultType="java.util.HashMap">
+        SELECT RoleId FROM sys_userrole WHERE UserId = #{UserId}
+    </select>
+
+    <delete id="deleteRoleList" parameterType="java.util.HashMap">
+        DELETE FROM sys_userrole WHERE UserId = #{userId}
+    </delete>
+
+    <insert id="saveRole" parameterType="java.util.HashMap">
+        INSERT INTO sys_userrole (UserId,RoleId) VALUES (#{UserId},#{RoleId})
+    </insert>
+
+    <delete id="deleteUserRoleList" parameterType="java.util.HashMap">
+        DELETE FROM sys_userrole WHERE UserId IN
+        <foreach collection="Id" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

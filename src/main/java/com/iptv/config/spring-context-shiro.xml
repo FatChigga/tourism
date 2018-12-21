@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-4.0.xsd"
+       default-lazy-init="true">
+
+    <description>Shiro Configuration</description>
+
+    <!-- 配置权限管理器 -->
+    <bean id="myShiro" class="com.iptv.core.shiro.MyShiroRealm">
+        <property name="credentialsMatcher" ref="credentialsMatcher"></property>
+        <!--
+		对认证数据、授权数据 哪些进行缓存
+		缓存区的名字就是ehcache.xml 自定义cache的name
+	-->
+        <property name="authorizationCacheName" value="userrole"></property>
+    </bean>
+
+    <!-- 配置密码对比时，加密的方式-->
+    <bean id="credentialsMatcher"
+          class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <property name="hashAlgorithmName" value="SHA-256" />
+        <property name="storedCredentialsHexEncoded" value="true" />
+    </bean>
+
+    <bean id="redisManager" class="org.crazycake.shiro.RedisManager">
+        <property name="host" value="${redis.host}" />
+        <property name="port" value="${redis.port}" />
+        <property name="database" value="${redis.dbIndex}" />
+    </bean>
+    <!--
+    如果是redis集群，可以使用这个配置
+    <bean id="redisManager" class="org.crazycake.shiro.RedisClusterManager">
+        <property name="host" value="192.168.21.3:7000,192.168.21.3:7001,192.168.21.3:7002,192.168.21.3:7003,192.168.21.3:7004,192.168.21.3:7005"/>
+    </bean>
+    -->
+    <!-- Redis-based session configuration -->
+    <bean id="redisSessionDAO" class="org.crazycake.shiro.RedisSessionDAO">
+        <property name="redisManager" ref="redisManager" />
+        <!-- optional properties
+        <property name="expire" value="-2"/>
+        <property name="keyPrefix" value="shiro:session:" />
+        -->
+    </bean>
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionDAO" ref="redisSessionDAO" />
+        <property name="sessionIdUrlRewritingEnabled" value="false"/>
+    </bean>
+
+    <!-- Redis-based cache configuration -->
+    <bean id="cacheManager" class="org.crazycake.shiro.RedisCacheManager">
+        <property name="redisManager" ref="redisManager" />
+        <!-- optional properties
+        <property name="expire" value="1800"/>
+        <property name="keyPrefix" value="shiro:cache:" />
+        <property name="principalIdFieldName" value="id" />
+        -->
+    </bean>
+
+    <!-- securityManager -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="sessionManager" ref="sessionManager" />
+        <property name="cacheManager" ref="cacheManager" />
+
+        <!-- other configurations -->
+        <property name="realm" ref="myShiro"/>
+        <property name="rememberMeManager">
+            <bean class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+                <property name="cookie">
+                    <bean class="org.apache.shiro.web.servlet.SimpleCookie">
+                        <constructor-arg value="rememberMe"/>
+                        <property name="maxAge" value="1800"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+    <!-- shiro-redis configuration [end] -->
+
+
+     <!--shiro结合Session会话管理器
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        &lt;!&ndash; session的失效时长，单位毫秒 1小时: 3600000, itzixi站点设置以 6小时 为主：21600000 &ndash;&gt;
+        &lt;!&ndash; 设置全局会话超时时间，默认30分钟，即如果30分钟内没有访问会话将过期 1800000 &ndash;&gt;
+        <property name="globalSessionTimeout" value="21600000"/>
+        &lt;!&ndash; 删除失效的session &ndash;&gt;
+        <property name="deleteInvalidSessions" value="true"/>
+        &lt;!&ndash; 是否开启会话验证器，默认是开启的 &ndash;&gt;
+        <property name="sessionValidationSchedulerEnabled" value="true"/>
+        <property name="sessionDAO" ref="shiroSessionDAO">
+        </property>
+        <property name="sessionIdCookie">
+            <bean class="org.apache.shiro.web.servlet.SimpleCookie">
+                <constructor-arg name="name" value="shiroCookie"/>
+            </bean>
+        </property>
+        &lt;!&ndash;避免url中出现jsessionid&ndash;&gt;
+        <property name="sessionIdUrlRewritingEnabled" value="false"/>
+    </bean>-->
+
+    <!--<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        &lt;!&ndash; 我们自定义的realm &ndash;&gt;
+        <property name="realm" ref="myShiro"/>
+        &lt;!&ndash; 缓存管理器 &ndash;&gt;
+        <property name="cacheManager" ref="shiroCacheManager"/>
+        &lt;!&ndash; 配置sessionManager，提供session管理 &ndash;&gt;
+        <property name="sessionManager" ref="sessionManager"></property>
+
+        <property name="rememberMeManager">
+            <bean class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+                <property name="cookie">
+                    <bean class="org.apache.shiro.web.servlet.SimpleCookie">
+                        <constructor-arg value="rememberMe"/>
+                        <property name="maxAge" value="1800"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>-->
+
+    <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+    <!-- AOP式方法级权限检查 -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true" />
+    </bean>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!-- 权限管理器 -->
+        <property name="securityManager" ref="securityManager"/>
+        <!-- 登录地址 -->
+        <property name="loginUrl" value="/admin/login"/>
+        <!-- 登录后跳转到业务页面 -->
+        <property name="successUrl" value="/admin/main"/>
+        <!-- 错误页面 -->
+        <property name="unauthorizedUrl" value="/admin/error"/>
+        <!-- 权限配置 -->
+        <property name="filterChainDefinitions">
+            <value>
+                <!-- anon无权限访问请求，此处是登录页面和登录请求 -->
+                /admin/login = authc
+                /assets/** = anon
+                <!--拦截非静态资源的所有请求-->
+                /** = authc
+            </value>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sysGroupMenu">
+    <select id="getMenuRootNodes" resultType="java.util.HashMap">
+        SELECT concat('[',a.Code,'] ',a.Name) AS name,
+        a.Id as id,true as open,a.ParentId
+        FROM sys_menu a WHERE Enable = 1 AND ( a.ParentId IS NULL OR a.ParentId = 0 )
+    </select>
+
+    <select id="getMenuNodesForParentId" resultType="java.util.HashMap">
+        SELECT concat('[',a.Code,'] ',a.Name) AS name,
+        a.Id as id,true as open,a.ParentId
+        FROM sys_menu a WHERE Enable = 1 AND a.ParentId = #{parentId}
+    </select>
+
+    <select id="getGroupNodes" resultType="java.util.HashMap">
+        SELECT concat('[',a.Code,'] ',a.Name) AS name,
+        a.Id as id,true as open
+        FROM sys_group a WHERE Enable = 1 ORDER BY Code
+    </select>
+
+    <select id="getMenuList" resultType="java.util.HashMap">
+        SELECT MenuId,null as PermisionId FROM sys_groupmenu WHERE GroupId = #{groupId}
+        UNION ALL
+        SELECT MenuId,null as PermisionId FROM sys_groupmenu_component WHERE GroupId = #{groupId}
+        UNION ALL
+        SELECT CONCAT('prm',MenuId) as MenuId,PermisionId FROM sys_groupmenu WHERE GroupId = #{groupId} AND PermisionId
+        IS NOT NULL
+        UNION ALL
+        SELECT CONCAT('crm',MenuId) as MenuId,CONCAT(ComponentPermisionId,'[Component]') as PermisionId
+        FROM sys_groupmenu_component WHERE GroupId = #{groupId} AND ComponentPermisionId IS NOT NULL
+    </select>
+
+    <delete id="deleteMenuList" parameterType="java.util.HashMap">
+        DELETE FROM sys_groupmenu WHERE GroupId = #{groupId}
+    </delete>
+
+    <insert id="saveMenu" parameterType="java.util.HashMap">
+        INSERT INTO sys_groupmenu (GroupId,MenuId,PermisionId) VALUES (#{groupId},#{menuId},#{permisionId})
+    </insert>
+
+    <delete id="deleteGroupMenuList" parameterType="java.util.HashMap">
+        DELETE FROM sys_groupmenu WHERE GroupId IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item.id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,124 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="tourism:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/tourism_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="tourism" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Spring-4.3.18.RELEASE" />
+          <element id="library" level="project" name="Spring MVC-4.3.18.RELEASE" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/axis.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jstl.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/saaj.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jaxrpc.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/policy.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/poi-3.9.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/stax-ex.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/axis-ant.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/gson-2.1.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jaxb-api.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jaxws-rt.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/standard.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/aspectjrt.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/javax.ejb.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/javax.jms.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jaxb-core.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jaxb-impl.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jaxws-api.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/junit-4.12.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/antlr-2.7.7.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/dom4j-1.6.1.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jedis-2.9.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jsoup-1.7.3.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/log4j-1.2.17.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/streambuffer.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/wsdl4j-1.5.1.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/aspectjweaver.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/javax.servlet.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/mybatis-3.4.2.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/poi-ooxml-3.9.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/commons-io-2.2.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/javax.resource.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/management-api.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/xmlbeans-2.5.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/aopalliance-1.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/commons-cli-1.2.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/commons-net-3.3.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/json_simple-1.1.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/shiro-cas-1.4.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/shiro-web-1.4.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/javax.annotation.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jsqlparser-0.9.5.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/pagehelper-5.1.2.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/shiro-core-1.4.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/shiro-lang-1.4.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/slf4j-api-1.7.25.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/xml-resolver-1.2.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/commons-codec-1.3.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/commons-lang3-3.4.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/commons-pool2-2.2.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/hamcrest-core-1.3.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/javax.persistence.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/javax.servlet.jsp.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/javax.transaction.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/shiro-cache-1.4.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/shiro-spring-1.4.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/commons-logging-1.2.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/shiro-ehcache-1.4.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/mybatis-spring-1.3.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/slf4j-log4j12-1.7.25.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/xmlschema-core-2.2.1.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/commons-discovery-0.2.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/poi-ooxml-schemas-3.9.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/commons-httpclient-3.1.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jackson-core-2.6.0-rc4.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/shiro-config-core-1.4.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/shiro-config-ogdl-1.4.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/shiro-crypto-core-1.4.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/shiro-crypto-hash-1.4.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/commons-fileupload-1.3.1.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-tx-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/shiro-crypto-cipher-1.4.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-aop-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-jms-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-orm-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-oxm-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-web-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jackson-databind-2.6.0-rc4.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-core-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-jdbc-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-test-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-beans-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-webmvc-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jackson-annotations-2.6.0-rc4.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-aspects-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-context-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/mysql-connector-java-5.1.39-bin.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-data-redis-1.8.9.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-messaging-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-websocket-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-expression-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-instrument-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-data-commons-1.8.6.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-webmvc-portlet-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-context-support-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-instrument-tomcat-4.3.18.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/ehcache-core-2.6.11.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/amqp-client-4.2.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-amqp-1.7.5.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-rabbit-1.7.5.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/spring-retry-1.2.2.RELEASE.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/logback-core-1.2.3.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/logback-access-1.2.3.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/logback-classic-1.2.3.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jcl-over-slf4j-1.7.25.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/logback-ext-spring-0.1.4.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/shiro-redis-3.1.0.jar" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="tourism/web/Web" />
+    </root>
+  </artifact>
+</component>

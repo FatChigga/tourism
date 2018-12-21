@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sysMenu">
+    <insert id="saveMenu" parameterType="java.util.HashMap">
+        INSERT INTO sys_menu (Code, Name, ParentId, Level, PageUrl, Remark,
+        Enable, IsVisiable, MenuIcon, OrderNum, IsShortcut, BtnStyle)
+        VALUES (#{Code}, #{Name}, #{ParentId}, #{Level}, #{PageUrl}, #{Remark},
+        #{Enable}, #{IsVisiable}, #{MenuIcon}, #{OrderNum}, #{IsShortcut} , #{BtnStyle})
+    </insert>
+
+    <update id="updateMenu" parameterType="java.util.HashMap">
+        UPDATE sys_menu SET Code = #{Code}, Name = #{Name}, ParentId = #{ParentId},Level = #{Level},
+        PageUrl = #{PageUrl}, Remark = #{Remark}, Enable = #{Enable},IsShortcut = #{IsShortcut},
+        IsVisiable = #{IsVisiable}, MenuIcon = #{MenuIcon}, OrderNum = #{OrderNum}, BtnStyle = #{BtnStyle}
+        WHERE Id = #{Id}
+    </update>
+
+    <delete id="deleteMenu" parameterType="java.util.HashMap">
+        DELETE FROM sys_menu WHERE Id = #{Id} OR ParentId = ${Id}
+    </delete>
+
+    <select id="getAllMenus" resultType="java.util.HashMap">
+        SELECT * FROM sys_menu ORDER BY OrderNum
+    </select>
+
+    <select id="getRootNodes" resultType="java.util.HashMap">
+        SELECT concat('[',a.Code,'] ',a.Name) as name,a.Id as id,'' as url,true as open,a.ParentId,a.*,a.Name as
+        MenuName
+        FROM sys_menu a WHERE a.ParentId IS NULL OR a.ParentId = 0
+        ORDER BY a.OrderNum
+    </select>
+
+    <select id="getNodesByParentID" resultType="java.util.HashMap">
+        SELECT concat('[',a.Code,'] ',a.Name) as name,a.Id as id,'' as url,true as open,a.ParentId,a.*,a.Name as
+        MenuName
+        FROM sys_menu a WHERE a.ParentId = #{parentId}
+        ORDER BY a.OrderNum
+    </select>
+
+    <select id="getNodeById" resultType="java.util.HashMap">
+        SELECT * FROM sys_menu a WHERE a.Id = #{Id}
+    </select>
+
+    <select id="getRootMenus" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT * FROM sys_menu WHERE ParentId IS NULL OR ParentId = 0
+    </select>
+
+    <select id="getByParentId" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT * FROM sys_menu WHERE ParentId = #{parentId}
+    </select>
+
+    <select id="getUserMenus" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+        SELECT DISTINCT
+        t.Id,t.Name,t.Code,t.ParentId,t.Level,t.Enable,t.IsVisiable,t.MenuIcon,t.PageUrl,t.IsShortcut,t.BtnStyle
+        FROM sys_menu t
+        INNER JOIN (
+        SELECT b.MenuId FROM sys_userrole a
+        INNER JOIN sys_rolemenu b ON a.RoleId = b.RoleId
+        WHERE a.userId = #{userId}
+        UNION
+        SELECT b.MenuId FROM sys_userorganization a
+        INNER JOIN sys_orgmenu b ON a.OrgId = b.OrganizationId
+        WHERE a.userId = #{userId}
+        UNION
+        SELECT b.MenuId FROM sys_usergroup a
+        INNER JOIN sys_groupmenu b ON a.GroupId = b.GroupId
+        WHERE a.userId = #{userId}
+        UNION
+        SELECT b.MenuId FROM sys_user a
+        INNER JOIN sys_usermenu b ON a.Id = b.UserId
+        WHERE a.Id = #{userId}
+        ) v ON t.Id = v.MenuId
+        WHERE t.Enable = 1
+        ORDER BY t.OrderNum
+    </select>
+
+    <select id="getCurrentPermisions" resultType="java.util.HashMap">
+        SELECT * FROM sys_permision x
+        WHERE x.IsEnable = 1 AND x.Id IN (
+        SELECT b.PermisionId FROM sys_userrole a
+        INNER JOIN sys_rolemenu b ON a.RoleId = b.RoleId
+        WHERE a.userId = #{userId} AND b.MenuId = #{menuId}
+        UNION
+        SELECT b.PermisionId FROM sys_userorganization a
+        INNER JOIN sys_orgmenu b ON a.OrgId = b.OrganizationId
+        WHERE a.userId = #{userId} AND b.MenuId = #{menuId}
+        UNION
+        SELECT b.PermisionId FROM sys_usergroup a
+        INNER JOIN sys_groupmenu b ON a.GroupId = b.GroupId
+        WHERE a.userId = #{userId} AND b.MenuId = #{menuId}
+        UNION
+        SELECT b.PermisionId FROM sys_user a
+        INNER JOIN sys_usermenu b ON a.Id = b.UserId
+        WHERE a.Id = #{userId} AND b.MenuId = #{menuId}
+        )
+    </select>
+
+    <select id="getCurrentPermisionComponents" resultType="java.util.HashMap">
+        SELECT * FROM sys_permision_component x
+        WHERE x.IsEnable = 1 AND x.Id IN (
+        SELECT b.ComponentPermisionId FROM sys_userrole a
+        INNER JOIN sys_rolemenu_component b ON a.RoleId = b.RoleId
+        WHERE a.userId = #{userId} AND b.MenuId = #{menuId}
+        UNION
+        SELECT b.ComponentPermisionId FROM sys_userorganization a
+        INNER JOIN sys_orgmenu_component b ON a.OrgId = b.OrganizationId
+        WHERE a.userId = #{userId} AND b.MenuId = #{menuId}
+        UNION
+        SELECT b.ComponentPermisionId FROM sys_usergroup a
+        INNER JOIN sys_groupmenu_component b ON a.GroupId = b.GroupId
+        WHERE a.userId = #{userId} AND b.MenuId = #{menuId}
+        UNION
+        SELECT b.ComponentPermisionId FROM sys_user a
+        INNER JOIN sys_usermenu_component b ON a.Id = b.UserId
+        WHERE a.Id = #{userId} AND b.MenuId = #{menuId}
+        )
+    </select>
+</mapper>

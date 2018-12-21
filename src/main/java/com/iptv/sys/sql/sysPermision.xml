@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="permision">
+    <select id="getPermisionPaged" resultType="java.util.HashMap">
+        SELECT * FROM sys_permision
+    </select>
+
+    <select id="findPermisionByCode" resultType="java.util.HashMap">
+        SELECT * FROM sys_permision WHERE Code = #{Code}
+    </select>
+
+    <select id="findPermisionById" resultType="java.util.HashMap">
+        SELECT * FROM sys_permision WHERE id=#{Id}
+    </select>
+
+    <insert id="save" parameterType="java.util.HashMap">
+        INSERT INTO sys_permision (Code,Name,IconCss,IsEnable)
+        VALUES ( #{Code},#{Name},#{IconCss},#{IsEnable})
+    </insert>
+
+    <update id="update" parameterType="java.util.HashMap">
+        UPDATE sys_permision SET Code=#{Code},Name=#{Name},IconCss = #{IconCss},
+        IsEnable=#{IsEnable}
+        WHERE id = #{Id}
+    </update>
+
+    <delete id="delete" parameterType="java.util.HashMap">
+        DELETE FROM sys_permision WHERE ID IN
+        <foreach collection="Id" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="getAllPermision" resultType="java.util.HashMap">
+        SELECT * FROM sys_permision
+    </select>
+</mapper>

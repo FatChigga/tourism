@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sysParams">
+    <insert id="saveLog" parameterType="java.util.HashMap">
+        INSERT INTO sys_log (UserCode,UserName,IPAddress,OperationType,Operation,CreateDate,Remark)
+        VALUES (#{UserCode},#{UserName},#{IPAddress},#{OperationType},#{Operation},#{CreateDate},#{Remark})
+    </insert>
+
+    <select id="getSysDic" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT a.Text as text,a.KeyValue as value,a.* FROM sys_dictionary a
+        WHERE a.KeyCode = #{Key} AND a.isVisible = 1
+        <if test="Value != null">
+            AND a.KeyValue like #{Value}
+        </if>
+        ORDER BY OrderNum
+    </select>
+</mapper>

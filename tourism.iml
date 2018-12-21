@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="web" name="Web">
+      <configuration>
+        <descriptors>
+          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/web/WEB-INF/web.xml" />
+        </descriptors>
+        <webroots>
+          <root url="file://$MODULE_DIR$/web" relative="/" />
+        </webroots>
+        <sourceRoots />
+      </configuration>
+    </facet>
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="web application context" name="MVC application context" removed="true" />
+        <fileset id="web mvc servlet context" name="MVC mvc servlet context" removed="true">
+          <file>file://$MODULE_DIR$/web/mvc-servlet.xml</file>
+        </fileset>
+        <fileset id="fileset4" name="Spring Application Context (4)" removed="false">
+          <file>file://$MODULE_DIR$/src/main/java/com/iptv/config/applicationContext.xml</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/iptv/config/mvc-servlet.xml</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/iptv/config/spring-context-rabbitmq.xml</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/iptv/config/spring-context-shiro.xml</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/iptv/config/spring-datasource.xml</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/iptv/sys/cfg/sys-cfg.xml</file>
+        </fileset>
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/web/assets" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/web/view" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java/com/iptv/config" type="java-resource" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="Spring-4.3.18.RELEASE" level="project" />
+    <orderEntry type="library" exported="" name="Spring MVC-4.3.18.RELEASE" level="project" />
+    <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 7.0.88" level="application_server_libraries" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="lib" level="project" />
+  </component>
+</module>

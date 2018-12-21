@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sysRolePermission">
+    <select id="getMenuRootNodes" resultType="java.util.HashMap">
+        SELECT concat('[',a.Code,'] ',a.Name) AS name,
+        a.Id as id,true as open,a.ParentId
+        FROM sys_menu a WHERE Enable = 1 AND ( a.ParentId IS NULL OR a.ParentId = 0 )
+    </select>
+
+    <select id="getMenuNodesForParentId" resultType="java.util.HashMap">
+        SELECT concat('[',a.Code,'] ',a.Name) AS name,
+        a.Id as id,true as open,a.ParentId
+        FROM sys_menu a WHERE Enable = 1 AND a.ParentId = #{parentId}
+    </select>
+
+    <select id="getRoleNodes" resultType="java.util.HashMap">
+        SELECT concat('[',a.Code,'] ',a.Name) AS name,
+        a.Id as id,true as open
+        FROM sys_role a WHERE Enable = 1 ORDER BY OrderNum,substring(a.Code,1,3)
+    </select>
+
+    <select id="getPermissionList" resultType="java.util.HashMap">
+        SELECT b.*
+        FROM sys_role_permission a
+        LEFT JOIN sys_permission b ON a.PermisionId = b.Id
+        WHERE a.RoleId = #{RoleId}
+    </select>
+
+    <delete id="deleteMenuList" parameterType="java.util.HashMap">
+        DELETE FROM sys_rolemenu WHERE RoleId = #{roleId}
+    </delete>
+
+    <insert id="saveMenu" parameterType="java.util.HashMap">
+        INSERT INTO sys_rolemenu (RoleId,MenuId,PermisionId) VALUES (#{roleId},#{menuId},#{permisionId})
+    </insert>
+
+    <delete id="deleteRoleMenuList" parameterType="java.util.HashMap">
+        DELETE FROM sys_rolemenu WHERE RoleId IN
+        <foreach collection="Id" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <delete id="deleteRoleMenuComponentList" parameterType="java.util.HashMap">
+        DELETE FROM sys_rolemenu_component WHERE RoleId IN
+        <foreach collection="Id" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

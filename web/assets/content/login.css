@@ -1,0 +1,554 @@
+@charset "utf-8";
+
+html, body {
+    background: #fff;
+    color: #666666;
+    min-height: 100%;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    margin: 0;
+    padding: 0;
+}
+
+body, button, input, select, textarea {
+    font: 13px/1.5 "Microsoft YaHei", "黑体", "宋体", "Hiragino Sans GB", "Helvetica Neue", Helvetica, tahoma, arial, Hiragino Sans GB, \5b8b\4f53;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6, b {
+    font-weight: normal;
+}
+
+html, body, form, fieldset, p, div, h1, h2, h3, h4, h5, h6 {
+    -webkit-text-size-adjust: none;
+}
+
+/*阻止旋转屏幕时自动调整字体大小*/
+textarea {
+    resize: none;
+}
+
+input[type=button] {
+    -webkit-appearance: none;
+    outline: none
+}
+
+input[type=file] {
+    -webkit-appearance: none;
+    outline: none
+}
+
+input::-webkit-input-placeholder {
+    color: #c6c6c6;
+}
+
+textarea::-webkit-input-placeholder {
+    color: #c6c6c6;
+}
+
+input::-webkit-input-speech-button {
+    display: none
+}
+
+input, textarea, select {
+    vertical-align: middle;
+}
+
+select {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+select::-ms-expand {
+    display: none;
+}
+
+textarea {
+    resize: none;
+}
+
+/*table {border-collapse:collapse;}  */
+th {
+    text-align: inherit;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+a, button {
+    cursor: pointer;
+}
+
+a {
+    color: #666666;
+}
+
+a, a:hover {
+    text-decoration: none;
+}
+
+a:focus, *:focus {
+    outline: none;
+}
+
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.outL {
+    white-space: normal;
+    word-break: break-all;
+    width: 100px;
+}
+
+.outH {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/*多行文本省略号*/
+.outtext {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/*布局*/
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.clear {
+    clear: both;
+}
+
+.hide {
+    display: none !important;
+}
+
+.bluetxt {
+    color: #1b7cc3 !important;
+}
+
+.redtxt {
+    color: #ff0000 !important;
+}
+
+.greentxt {
+    color: #1aaa00 !important;
+}
+
+.orangetxt {
+    color: #ff9900 !important;
+}
+
+.graytxt {
+    color: #999 !important;
+}
+
+/*表格表单*/
+input[type=text].inputcss:focus, select:focus, textarea:focus {
+    border: 1px solid #6ba7d3;
+}
+
+.inputcss {
+    display: inline-block;
+    padding: 5px 5px;
+    width: 220px;
+    height: 32px;
+    color: #444;
+    font-size: 13px;
+    border: 1px solid #d4d4d4;
+    background-color: #FFF;
+    -webkit-appearance: none;
+}
+
+select {
+    display: inline-block;
+    position: relative;
+    padding: 0 20px 0 10px;
+    height: 32px;
+    font-size: 13px;
+    color: #444;
+    border: 1px solid #d4d4d4;
+}
+
+.textareacss {
+    display: inline-block;
+    padding: 5px 10px;
+    width: 66%;
+    height: 60px;
+    line-height: 22px;
+    color: #444;
+    font-size: 12px;
+    border: 1px solid #d4d4d4;
+    background-color: #FFF;
+    -webkit-appearance: none;
+}
+
+.inputgroup {
+    display: inline-block;
+    font-size: 14px;
+}
+
+.inputgroup label {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+input[type=radio] {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+}
+
+input[type=checkbox] {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+}
+
+.err {
+    border: 1px solid #ff0000;
+    color: #ff0000;
+}
+
+input:disabled, select:disabled, textarea:disabled {
+    border: 1px solid #e6e6e6;
+}
+
+/*- tableBasic -*/
+
+.tableBasic {
+    background-color: #F9F9F9;
+    color: #666666;
+    font-size: 12px;
+    border-left: 1px dotted #CCCCCC;
+    border-top: 1px dotted #CCCCCC;
+}
+
+.tableBasic td, .tableBasic th {
+    padding: 8px;
+    border-right: 1px dotted #CCCCCC;
+    border-bottom: 1px dotted #CCCCCC;
+}
+
+.tableBasic th {
+    background-color: #EEEEEE;
+    text-align: center;
+}
+
+.tableBasic td.modtxt {
+    text-align: right;
+}
+
+.tableBasic .child {
+    background-color: #FFFFFF;
+}
+
+.tableBasic a {
+    color: #888;
+}
+
+.tableBasic a:hover {
+    color: #1b7cc3
+}
+
+.formbox .tableBasic {
+    border-left: 1px dotted #CCCCCC;
+    border-top: 1px dotted #CCCCCC;
+}
+
+.formbox .tableBasic td, .formbox .tableBasic th {
+    padding: 8px;
+    border-right: 1px dotted #CCCCCC;
+    border-bottom: 1px dotted #CCCCCC;
+}
+
+.table
+    /*- tableNobor -*/
+.tableNobor td {
+    border: 0;
+}
+
+/*- tableOnebor -*/
+.tableOnebor td {
+    border-right: 0;
+}
+
+/*按钮*/
+.btn {
+    display: inline-block;
+    margin-right: 6px;
+    padding: 5px 15px;
+    height: 32px;
+    color: #fff;
+    font-size: 14px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    border: none;
+    background: none;
+    background-color: #1b7cc3;
+}
+
+.btn:hover {
+    background: #218ede;
+    color: #fff;
+}
+
+.btn i, .btn01 i {
+    margin-right: 6px;
+    font-size: 14px;
+}
+
+.btn01 {
+    padding: 5px 15px;
+    background: #fff;
+    margin-right: 6px;
+    height: 32px;
+    font-size: 14px;
+    color: #1b7cc3 !important;
+    border: 1px solid #218ede;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.btn01:hover {
+    color: #444 !important;
+    border: 1px solid #666;
+}
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+    background-color: #fff !important;
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+.modal.in .modal-dialog {
+    -webkit-transform: translate(0, -40%);
+    -ms-transform: translate(0, -40%);
+    -o-transform: translate(0, -40%);
+    transform: translate(0, -40%)
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #333;
+}
+
+.modal-dialog {
+    position: absolute;
+    width: auto;
+    margin: 10px auto;
+    left: 0;
+    right: 0;
+    top: 40%;
+    width: 150px;
+    background-color: #333;
+}
+
+.modal-content {
+    text-align: center;
+    padding: 35px 20px;
+}
+
+/*登录*/
+.loginheader {
+    position: relative;
+    margin: 0 auto;
+    width: 1006px;
+    height: 128px;
+    line-height: 128px;
+}
+
+.systemtitle {
+    font-size: 32px;
+}
+
+.systeminfo {
+    margin-left: 10px;
+}
+
+.datetxt {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.loginwrapper {
+    width: 100%;
+    background: #1b7cc3 url(../images/admin/loginbg.png) center center no-repeat;
+}
+
+.logincontent {
+    position: relative;
+    margin: 0 auto;
+    width: 1006px;
+    height: 500px;
+    background: url(../images/admin/loginimg.png) left center no-repeat;
+}
+
+.loginbox {
+    position: absolute;
+    top: 6px;
+    right: -40px;
+    width: 421px;
+    height: 486px;
+    background: url(../images/admin/loginbox.png) center center no-repeat;
+}
+
+.inputbox {
+    margin: 50px auto;
+    width: 280px;
+}
+
+.inputbox label {
+    display: block;
+    padding: 30px 0 10px;
+    font-size: 18px;
+    margin-bottom: 0;
+}
+
+@media (max-width: 420px) {
+    .loginheader {
+        width: 100%;
+    }
+
+    .systemtitle {
+        width: 100%;
+        text-align: center;
+        display: block;
+    }
+
+    .systeminfo {
+        display: none;
+    }
+
+    .datetxt {
+        display: none;
+    }
+
+    .loginwrapper {
+        width: 100%;
+        overflow-x: hidden;
+        background: #1b7cc3;
+        background-image: none;
+    }
+
+    .logincontent {
+        width: 100%;
+        margin: 0;
+        margin-left: 50%;
+    }
+
+    .logincontent .loginbox {
+        margin-left: -50%;
+        right: auto;
+        background: #1b7cc3;
+        background-image: none;
+    }
+
+    .inputbox {
+        margin: 50px;
+        width: 310px;
+        background: #fff;
+        padding: 15px;
+    }
+}
+
+.inputwrapper {
+    position: relative;
+    margin-top: 15px;
+    padding: 0 10px;
+    border: 1px solid #d8d8d8;
+    box-sizing: content-box;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.inputwrapper .icon {
+    position: relative;
+    top: 3px;
+    color: #c6c6c6;
+}
+
+.inputfocus {
+    border: 1px solid #6ba7d3;
+}
+
+.inputfocus .icon {
+    color: #6ba7d3;
+}
+
+.inputwrapper input {
+    margin-left: 6px;
+    width: 220px;
+    background: none;
+    border: none;
+    padding: 12px 0;
+}
+
+.errorbox {
+    line-height: 20px;
+    color: #f93a60;
+    min-height: 0px;
+    background-color: #feeff2;
+    padding: 0 7px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.errorbox .errortxt {
+    display: block;
+}
+
+.loginbtn {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    background: #1b7cc3;
+    border: none;
+    cursor: pointer;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    margin-top: 15px;
+}
+
+.loginbtn:hover {
+    background: #218ede;
+}
+
+.loginfooter {
+    padding: 50px 0;
+    line-height: 32px;
+    text-align: center;
+}

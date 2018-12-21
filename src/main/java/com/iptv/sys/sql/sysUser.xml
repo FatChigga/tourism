@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+    <select id="getUserPaged" resultType="java.util.HashMap">
+        SELECT a.*,b.Name as OrganizationName,
+        (CASE a.Id WHEN 1
+        <![CDATA[
+				THEN CONCAT('<span class="text-danger">','超级管理员，</span>',GROUP_CONCAT(d.Name))
+				ELSE GROUP_CONCAT(d.Name) end
+				]]>
+        ) as RoleName
+        FROM sys_user a
+        LEFT JOIN sys_organization b ON a.OrganizationId = b.Id
+        LEFT JOIN sys_userrole c ON a.Id = c.UserId
+        LEFT JOIN sys_role d ON c.RoleId = d.Id
+        GROUP BY a.Id
+        ORDER BY a.Code, a.CreateTime DESC
+    </select>
+
+    <select id="getIdCount" resultType="java.lang.Integer">
+        SELECT count(1) FROM sys_user
+    </select>
+
+    <select id="findUserById" resultType="java.util.HashMap">
+        SELECT a.* ,(CASE a.Id WHEN 1
+        <![CDATA[
+				THEN CONCAT('<span class="text-danger">','超级管理员，</span>',GROUP_CONCAT(c.Name))
+				ELSE GROUP_CONCAT(c.Name) end
+				]]>
+        ) as RoleName
+        FROM sys_user a
+        LEFT JOIN sys_userrole b ON a.Id = b.UserId
+        LEFT JOIN sys_role c ON b.RoleId = c.Id
+        WHERE a.Id=#{id}
+    </select>
+
+    <select id="findUserByLoginName" resultType="java.util.HashMap">
+        SELECT * FROM sys_user WHERE LoginName=#{LoginName}
+    </select>
+
+    <select id="findUserByUserName" resultType="java.util.HashMap">
+        SELECT * FROM sys_user WHERE UserName=#{UserName}
+    </select>
+
+    <insert id="save" parameterType="java.util.HashMap">
+        INSERT INTO sys_user
+        (LoginName,UserName,OrganizationId,Password,Gender,Tel,
+        Email,CreateTime,UpdateTime,RoleId,Code,IsLeader)
+        VALUES
+        (#{LoginName},#{UserName},#{OrganizationId},#{Password},#{Gender},#{Tel},
+        #{Email},#{CreateTime},#{UpdateTime},0,#{Code},#{IsLeader})
+    </insert>
+
+    <update id="update" parameterType="java.util.HashMap">
+        UPDATE sys_user SET LoginName=#{LoginName},UserName=#{UserName},Password = #{Password},
+        OrganizationId=#{OrganizationId},Gender=#{Gender},Tel=#{Tel},Email=#{Email},
+        UpdateTime=#{UpdateTime},RoleId=0,Code=#{Code},IsLeader=#{IsLeader}
+        WHERE Id = #{Id}
+    </update>
+
+    <update id="updateNoPasswordModify" parameterType="java.util.HashMap">
+        UPDATE sys_user SET LoginName=#{LoginName},UserName=#{UserName},
+        OrganizationId=#{OrganizationId},Gender=#{Gender},Tel=#{Tel},
+        Email=#{Email},UpdateTime=#{UpdateTime},RoleId=0,Code=#{Code},IsLeader=#{IsLeader}
+        WHERE Id = #{Id}
+    </update>
+
+    <delete id="delete" parameterType="java.util.HashMap">
+        DELETE FROM sys_user WHERE ID IN
+        <foreach collection="Id" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="checkBeforePassword" resultType="java.util.HashMap">
+        SELECT * FROM sys_user WHERE Id = #{Id} AND Password = #{BeforePassword}
+    </select>
+
+    <update id="updatePasswordModify" parameterType="java.util.HashMap">
+        UPDATE sys_user SET Password = #{Password} WHERE Id = #{Id}
+    </update>
+
+    <select id="findAllUser" resultType="java.util.HashMap">
+        SELECT a.*,a.UserName as text,a.Id as value FROM sys_user a
+    </select>
+
+    <select id="getAllUserLoginName" resultType="java.util.HashMap">
+        SELECT a.LoginName FROM sys_user a
+    </select>
+
+    <insert id="addUser" parameterType="java.util.HashMap" keyProperty="Id" useGeneratedKeys="true">
+        INSERT INTO sys_user (LoginName,UserName,OrganizationId,Password,Gender,Tel,
+        Email,CreateTime,UpdateTime,RoleId,Code,IsLeader)
+        VALUES(#{LoginName},#{UserName},#{OrganizationId},#{Password},
+        #{Gender},#{Tel},#{Email},#{CreateTime},#{UpdateTime},#{RoleId},#{Code},#{IsLeader})
+    </insert>
+
+    <select id="getUserIdByLoginName" resultType="java.util.HashMap">
+        SELECT Id FROM sys_user WHERE LoginName = #{LoginName}
+    </select>
+
+
+    <update id="loginUpdateUser" parameterType="java.util.HashMap">
+        UPDATE sys_user SET Status = #{Status},UpdateTime = #{UpdateTime},ActivateTime = #{ActivateTime} WHERE Id = #{Id}
+    </update>
+</mapper>

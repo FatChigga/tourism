@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+    http://www.springframework.org/schema/aop 
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+        <!-- 配置数据源 -->
+        <bean id="dataSource"
+              class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+            <property name="driverClassName" value="${jdbc.driver}"></property>
+            <property name="url" value="${jdbc.url}"></property>
+            <property name="username" value="${jdbc.username}"></property>
+            <property name="password" value="${jdbc.password}"></property>
+        </bean>
+
+        <!-- 配置Session工厂 -->
+        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+            <property name="dataSource" ref="dataSource"></property>
+            <!-- 自动扫描Mapper -->
+            <property name="mapperLocations" value="classpath*:com/iptv/*/sql/*.xml"/>
+            <!-- 加载mybatis.cfg.xml文件 -->
+            <property name="configLocation" value="classpath:mybatis.cfg.xml"/>
+            <!-- 自动扫描需要定义类别名的包，将包内的JAVA类的类名作为类别名 -->
+            <!-- <property name="typeAliasesPackage" value="com.iptv.app.beans"></property> -->
+        </bean>
+        <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+            <constructor-arg index="0" ref="sqlSessionFactory"/>
+            <!--<constructor-arg index="1" value="BATCH" /> -->
+        </bean>
+        <bean id="basicDao" class="com.iptv.core.dao.BasicDaoImpl">
+            <!--注入SqlSessionTemplate实例 -->
+            <property name="sqlSessionTemplate" ref="sqlSession"/>
+        </bean>
+
+        <!-- redis config start -->
+        <!-- 配置JedisPoolConfig实例 -->
+        <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+            <property name="maxIdle" value="${redis.maxIdle}" />
+            <property name="maxTotal" value="${redis.maxActive}" />
+            <property name="maxWaitMillis" value="${redis.maxWait}" />
+            <property name="testOnBorrow" value="${redis.testOnBorrow}" />
+        </bean>
+
+        <!-- 配置JedisConnectionFactory -->
+        <bean id="jedisConnectionFactory"
+              class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+            <property name="hostName" value="${redis.host}" />
+            <property name="port" value="${redis.port}" />
+            <property name="database" value="${redis.dbIndex}" />
+            <property name="poolConfig" ref="poolConfig" />
+        </bean>
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" >
+        <property name="connectionFactory" ref="jedisConnectionFactory" />
+        <!--如果不配置Serializer，那么存储的时候缺省使用String，如果用User类型存储，那么会提示错误User can't cast to String！！  -->
+        <property name="keySerializer" >
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+        <property name="valueSerializer" >
+            <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />
+        </property>
+        <property name="hashKeySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+        <property name="hashValueSerializer">
+            <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+        </property>
+        <!--开启事务  -->
+        <property name="enableTransactionSupport" value="true"></property>
+    </bean >
+
+    <!--配置RedisCacheManager -->
+   <bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+       <constructor-arg name="redisOperations" ref="redisTemplate" />
+       <property name="defaultExpiration" value="${redis.expiration}" />
+   </bean>
+
+   <!-- 配置RedisCacheConfig -->
+   <bean id="redisCacheConfig" class="com.iptv.core.redis.RedisCacheConfig">
+        <constructor-arg ref="jedisConnectionFactory" />
+        <constructor-arg ref="redisTemplate" />
+        <constructor-arg ref="redisCacheManager" />
+    </bean>
+
+        <!-- 自动扫描所有的Mapper接口与文件 -->
+        <!-- <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> <property
+            name="basePackage" value="com.iptv.app.mapper"></property> </bean> -->
+</beans>

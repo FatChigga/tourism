@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sysOrganization">
+    <insert id="saveOrganization" parameterType="java.util.HashMap">
+        INSERT INTO sys_organization (Code, Name, ParentId, Level, ParentCode, Remark,
+        Enable, Tel, Fax)
+        VALUES (#{Code}, #{Name}, #{ParentId}, #{Level}, #{ParentCode}, #{Remark},
+        #{Enable}, #{Tel}, #{Fax})
+    </insert>
+
+    <update id="updateOrganization" parameterType="java.util.HashMap">
+        UPDATE sys_organization SET Code = #{Code}, Name = #{Name}, ParentId = #{ParentId},Level = #{Level},
+        ParentCode = #{ParentCode}, Remark = #{Remark}, Enable = #{Enable},
+        Tel = #{Tel}, Fax = #{Fax}
+        WHERE Id = #{Id}
+    </update>
+
+    <select id="getParentCode" resultType="java.util.HashMap">
+        SELECT Code FROM sys_organization WHERE Id = #{ParentId}
+    </select>
+
+    <delete id="deleteOrganization" parameterType="java.util.HashMap">
+        DELETE FROM sys_organization WHERE Id IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item.id}
+        </foreach>
+    </delete>
+
+    <select id="getRootNodes" resultType="java.util.HashMap">
+        <![CDATA[
+		SELECT concat('[',a.Code,']  ',a.Name,'<span class="pull-right text-primary">',
+					(CASE a.Enable WHEN 0 THEN '[禁用]' ELSE '[启用]' END ),'</span>') AS name,
+		]]>
+        a.Id as id,true as open,a.ParentId,a.Name as OrganizationName,a.*
+        FROM sys_organization a
+        WHERE a.ParentId IS NULL OR a.ParentId = 0
+        ORDER BY a.Code
+    </select>
+
+    <select id="getNodesByParentID" resultType="java.util.HashMap">
+        <![CDATA[
+		SELECT concat('[',a.Code,']  ',a.Name,'<span class="pull-right text-primary">',
+					(CASE a.Enable WHEN 0 THEN '[禁用]' ELSE '[启用]' END ),'</span>') AS name,
+		]]>
+        a.Id as id,true as open,a.ParentId,a.Name as OrganizationName,a.*
+        FROM sys_organization a
+        WHERE a.ParentId = #{parentId}
+        ORDER BY a.Code
+    </select>
+
+    <select id="getOrgOptions" resultType="java.util.HashMap">
+        SELECT a.Name as text,a.Id as value FROM sys_organization a
+        WHERE a.Enable = 1
+        <if test="text != null and text != ''">
+            AND a.Name LIKE CONCAT('%',#{text},'%')
+        </if>
+        ORDER BY a.Code
+    </select>
+
+    <select id="getDeleteNodesByParentID" resultType="java.util.HashMap">
+        SELECT a.Id as id FROM sys_organization a WHERE a.ParentId = #{parentId}
+    </select>
+
+    <select id="getOrganizationByName" resultType="java.util.HashMap">
+        SELECT a.Id,a.Code, a.Name, a.ParentId, a.Level, a.ParentCode, a.Remark,
+        a.Enable, a.Tel, a.Fax FROM sys_organization a WHERE a.Name = #{Name}
+    </select>
+
+    <insert id="saveOrganizationFromCopy" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="Id">
+        INSERT INTO sys_organization (Code, Name, ParentId, Level, ParentCode, Remark,
+        Enable, Tel, Fax)
+        VALUES (#{Code}, #{Name}, #{ParentId}, #{Level}, #{ParentCode}, #{Remark},
+        #{Enable}, #{Tel}, #{Fax})
+    </insert>
+
+    <update id="updateOrganizationPatentId" parameterType="java.util.HashMap">
+        UPDATE sys_organization SET ParentId = #{ParentId},ParentCode = #{ParentCode}
+        WHERE Id = #{Id}
+    </update>
+</mapper>
