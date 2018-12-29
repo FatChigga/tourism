@@ -116,6 +116,7 @@
           <element id="file-copy" path="$PROJECT_DIR$/lib/jcl-over-slf4j-1.7.25.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/lib/logback-ext-spring-0.1.4.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/lib/shiro-redis-3.1.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/druid-1.1.12.jar" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="tourism/web/Web" />

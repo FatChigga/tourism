@@ -106,6 +106,7 @@
       <root url="jar://$PROJECT_DIR$/lib/logback-access-1.2.3.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/logback-core-1.2.3.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/shiro-redis-3.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/druid-1.1.12.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

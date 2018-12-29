@@ -1,6 +1,7 @@
 <%@page import="com.iptv.core.common.Configuration"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -127,7 +128,7 @@
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                         <img class="nav-user-photo" width="30" height="30"
                              src="<%=basePath %>assets/images/admin/user.png" alt="admin">
-                        <span class="user-info">欢迎, ${userName}&nbsp;</span>
+                        <span class="user-info">欢迎, <shiro:principal property="realName"/>&nbsp;</span>
                         <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
@@ -204,7 +205,7 @@
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">用户名称</label>
-				<div class="col-sm-8 control-label text-danger" style="text-align:left;"> ${userName} </div>
+				<div class="col-sm-8 control-label text-danger" style="text-align:left;"><shiro:principal/></div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">旧密码</label>
