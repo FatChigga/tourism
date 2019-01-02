@@ -387,13 +387,13 @@
                 childCount > 0 ? dropDown = 'dropdown-toggle' : dropDown = '';
 
                 temp = '<li><a href="' + u.url + '" class="' + dropDown + '">' +
-                    '<i class="fa ' + v.MenuIcon + ' normal"></i><span class="menu-text normal">' + v.Name + '</span>' +
+                    '<i class="fa ' + v.IconCss + ' normal"></i><span class="menu-text normal">' + v.Name + '</span>' +
                     u.arrow + '<i class="fa fa-reply back"></i><span class="menu-text back">返回</span></a>';
                 html += temp;
 
                 if (v.IsShortcut) {
                     var h = '<a class="btn btn-xs ' + (v.BtnStyle == null ? 'btn-info' : v.BtnStyle) + '" href="javascript:openapp(\'' + v.PageUrl + '\',\''
-                        + v.Id + '\',\'' + v.Name + '\',true);" title="' + v.Name + '"> <i class="fa ' + v.MenuIcon + '"></i> </a>';
+                        + v.Id + '\',\'' + v.Name + '\',true);" title="' + v.Name + '"> <i class="fa ' + v.IconCss + '"></i> </a>';
                     $('#shortcut-list').append(h);
                 }
 
@@ -416,7 +416,7 @@
 
                         if (v2.IsShortcut) {
                             var h = '<a class="btn btn-xs ' + (v2.BtnStyle == null ? 'btn-info' : v2.BtnStyle) + '" href="javascript:openapp(\'' + v2.PageUrl + '\',\'m-'
-                                + v2.Id + '\',\'' + v2.Name + '\',true);" title="' + v2.Name + '"> <i class="fa ' + v2.MenuIcon + '"></i> </a>';
+                                + v2.Id + '\',\'' + v2.Name + '\',true);" title="' + v2.Name + '"> <i class="fa ' + v2.IconCss + '"></i> </a>';
                             $('#shortcut-list').append(h);
                         }
 
@@ -431,7 +431,7 @@
 
                                 if (v3.IsShortcut) {
                                     var h = '<a class="btn btn-xs ' + (v3.BtnStyle == null ? 'btn-info' : v3.BtnStyle) + '" href="javascript:openapp(\'' + v3.PageUrl + '\',\'m-'
-                                        + v3.Id + '\',\'' + v3.Name + '\',true);" title="' + v3.Name + '"> <i class="fa ' + v3.MenuIcon + '"></i> </a>';
+                                        + v3.Id + '\',\'' + v3.Name + '\',true);" title="' + v3.Name + '"> <i class="fa ' + v3.IconCss + '"></i> </a>';
                                     $('#shortcut-list').append(h);
                                 }
                             }

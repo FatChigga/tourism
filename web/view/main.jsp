@@ -30,11 +30,14 @@
     <script src="<%=basePath %>assets/scripts/admin.js"></script>
     <script type="text/javascript">
         var basePath = '<%=basePath%>';
+        var menus = JSON.parse('${sessionScope.menus}');
 
         $(document).ready(function () {
+            $('#nav-menu-list').menu(menus);
+
             $('#btn-loginout').click(function () {
                 $.mdlg.confirm('提示', '您确认要退出么?', function () {
-                    window.location.href = '<%=basePath%>admin/loginout';
+                    window.location.href = '<%=basePath%>admin/logout';
                 })
             })
 
@@ -147,7 +150,6 @@
         <!-- <div class="sidebar-shortcuts" id="sidebar-shortcuts"> </div> -->
         <div id="nav_wraper">
             <ul class="nav nav-list" id="nav-menu-list">
-                ${session.menus}
             </ul>
         </div>
     </div>
@@ -205,7 +207,7 @@
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">用户名称</label>
-				<div class="col-sm-8 control-label text-danger" style="text-align:left;"><shiro:principal/></div>
+				<div class="col-sm-8 control-label text-danger" style="text-align:left;"><shiro:principal property="realName"/></div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">旧密码</label>

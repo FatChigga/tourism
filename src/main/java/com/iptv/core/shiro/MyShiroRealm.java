@@ -140,7 +140,7 @@ public class MyShiroRealm extends AuthorizingRealm {
             listResource = removeDuplicateResource(listResource);
             Stream<Map<String, Object>> stream = listResource.stream();
             listResource = stream.sorted(MyShiroRealm::comparator).collect(Collectors.toList());
-            session.setAttribute("menus", listResource);// 用户拥有的菜单
+            session.setAttribute("menus", JsonUtil.getJson(listResource));// 用户拥有的菜单
         } catch (Exception e) {
             throw new AuthenticationException();
         }

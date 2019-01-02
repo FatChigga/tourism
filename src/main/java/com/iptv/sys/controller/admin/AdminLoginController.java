@@ -95,7 +95,7 @@ public class AdminLoginController
             param.put("UserCode",loginAccount);
             param.put("LoginStatus","0");
             sysLogLoginService.saveLoginLog(param);
-            redirectAttributes.addFlashAttribute("message", message);
+            if(!message.isEmpty())redirectAttributes.addFlashAttribute("message", message);
         }
         return "redirect:/admin/login";
     }

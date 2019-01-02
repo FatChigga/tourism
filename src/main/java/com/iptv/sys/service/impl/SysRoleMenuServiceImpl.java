@@ -181,8 +181,6 @@ public class SysRoleMenuServiceImpl
     }
 
     public List permissionList(Map map) {
-        Map data = new HashMap();
-
         List list = getDao().selectList("sysRolePermission.getPermissionList", map.get("RoleId"));
         return list;
     }
